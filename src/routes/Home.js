@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { Link } from 'react-router-dom'
 
 class Home extends Component {
     render() {
         return (
             <div>
                 <h1>Welcome to the Counter app</h1>
-                <button onClick={() => this.props.dispatch(push('/counter'))}>Click to go to Counter</button>
+                <Link to='/counter'>Click to go to Counter</Link>
             </div>
         )
     }
 }
+
 const mapStateToProps = (state) => {
     return {}
 }
