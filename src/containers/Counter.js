@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Count from '../components/Count'
+import CounterItem from '../components/CounterItem'
 import CountHeader from '../components/CountHeader'
 import { fetchCount, increment, decrement } from '../actions/counter'
 
@@ -9,7 +10,20 @@ class CounterContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: ''
+            name: '',
+            counterList: [
+                {
+                    id: 1,
+                    name: 'thing',
+                    desc: 'somthing'
+                },
+                {
+                    id: 2,
+                    name: 'other',
+                    desc: 'thinngs'
+                }
+            ],
+            selectedCounterIds: [],
         }
     }
 
@@ -49,6 +63,11 @@ class CounterContainer extends Component {
         }
     }
 
+    _handleClick = (id) => {
+        // I know the id of the jobs
+        this.setState({ selectedCounterIds: [ ...this.state.selectedCounterIds, +id ]});
+    }
+
   render() {
     return (
         <div>
@@ -65,6 +84,19 @@ class CounterContainer extends Component {
                 </label>
                 <input type="submit" value="Submit"/>
             </form>
+            { this.state.counterList.map((val, index) => {
+                return (
+                    <CounterItem
+                        key={index}
+                        selected={this.state.selectedCounterIds.indexOf(val.id) > -1}
+                        id={val.id}
+                        name={val.name}
+                        desc={val.desc}
+                        handleClick={this._handleClick}
+                    />
+                )
+            })
+            }
         </div>
     );
   }
